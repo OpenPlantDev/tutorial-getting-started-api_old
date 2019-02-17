@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
-    "build-start": "npm-run-all lint build test start",
+    "build-start": "npm-run-all lint build start",
     "dev": "nodemon --exec npm run build-start",
     "start": "env-cmd ./.env node ./out/app.js",
     "test": "mocha --require ts-node/register test/**/*.test.ts"
