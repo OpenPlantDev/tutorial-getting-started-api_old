@@ -1,9 +1,12 @@
 import {Router} from "express";
+import { IApiRouter } from "./IApiRouter";
 
 // WbsItemsRouter handles routes for /api/wbsitems
-export class WbsItemsRouter {
+export class WbsItemsRouter implements IApiRouter {
 
-  public static RouterHandler(): Router {
+  public route: string = "/api/wbsitems";
+
+  public RouteHandler(): Router {
 
     const router = Router();
     router.get("/", (req, res) => {

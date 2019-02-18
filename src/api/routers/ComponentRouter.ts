@@ -1,15 +1,16 @@
 import {Router} from "express";
+import { IApiRouter } from "./IApiRouter";
 
 // ComponentRouter handles routes for /api/components
-export class ComponentRouter {
+export class ComponentRouter implements IApiRouter {
 
-  public static RouterHandler(): Router {
+  public route: string = "/api/components";
+
+  public RouteHandler(): Router {
 
     const router = Router();
     router.get("/", (req, res) => {
-      throw new Error(`Database error`);
       return res.status(400).json({message: `Route GET /api/components is not yet handled`});
-
     });
 
     router.get("/:id", (req, res) => {

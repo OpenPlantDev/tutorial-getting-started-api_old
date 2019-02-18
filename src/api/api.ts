@@ -1,21 +1,25 @@
 import express from "express";
 import {ApiError} from "./ApiError";
-import {ComponentRouter} from "./routers/ComponentRouter";
-import { WbsItemsRouter } from "./routers/WbsItemsRouter";
+import {IApiRouter} from "./routers/IApiRouter";
 
 export class Api {
 
-  public Start(): void {
+  public Start(routers: IApiRouter[]): void {
     const api = express();
 
-    api.use("/api/components", ComponentRouter.RouterHandler());
-    api.use("/api/wbsitems", WbsItemsRouter.RouterHandler());
+    // call api.use for each router
+    routers.map((router) => {
+      api.use(router.route, router.RouteHandler());
+    });
+
+    // hanle error for routes not handled by routers
     api.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
       // create new error with status 404
       const err = new ApiError(404, `Route not found`);
       next(err);
     });
 
+    // handle errors thrown during the handling of the request
     api.use((error: ApiError, req: express.Request, res: express.Response, next: express.NextFunction) => {
       const status = error.status ? error.status : 500;
       const msg = error.message ? error.message : `Server error`;
