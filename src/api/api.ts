@@ -7,6 +7,10 @@ export class Api {
   public Start(routers: IApiRouter[]): void {
     const api = express();
 
+    // add middleware to read body of request
+    api.use(express.json());
+    api.use(express.urlencoded({extended: true}));
+
     // call api.use for each router
     routers.map((router) => {
       api.use(router.route, router.RouteHandler());
@@ -22,9 +26,9 @@ export class Api {
     // handle errors thrown during the handling of the request
     api.use((err: ApiError, req: express.Request, res: express.Response, next: express.NextFunction) => {
       const status = err.status ? err.status : 500;
-      const msg = err.message ? err.message : "Server error";
+      const message = err.message ? err.message : "Server error";
 
-      res.status(status).json({msg});
+      res.status(status).json({message});
 
     });
 
