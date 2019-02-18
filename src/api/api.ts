@@ -12,7 +12,7 @@ export class Api {
       api.use(router.route, router.RouteHandler());
     });
 
-    // hanle error for routes not handled by routers
+    // handle error for non-handled routes
     api.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
       // create new error with status 404
       const err = new ApiError(404, `Route not found`);
@@ -20,9 +20,9 @@ export class Api {
     });
 
     // handle errors thrown during the handling of the request
-    api.use((error: ApiError, req: express.Request, res: express.Response, next: express.NextFunction) => {
-      const status = error.status ? error.status : 500;
-      const msg = error.message ? error.message : `Server error`;
+    api.use((err: ApiError, req: express.Request, res: express.Response, next: express.NextFunction) => {
+      const status = err.status ? err.status : 500;
+      const msg = err.message ? err.message : "Server error";
 
       res.status(status).json({msg});
 

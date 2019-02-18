@@ -1,12 +1,12 @@
 import {Api} from "./api/api";
-import { ComponentRouter } from "./api/routers/ComponentRouter";
+import {IApiRouter} from "./api/routers/IApiRouter";
+import { ComponentsRouter } from "./api/routers/ComponentsRouter";
 import { WbsItemsRouter } from "./api/routers/WbsItemsRouter";
-import { IApiRouter } from "./api/routers/IApiRouter";
 
 const api = new Api();
 
 const routers: IApiRouter[] = [
-  new ComponentRouter(),
+  new ComponentsRouter(),
   new WbsItemsRouter(),
 ];
 
