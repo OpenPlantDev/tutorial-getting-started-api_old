@@ -1,4 +1,4 @@
-import {Router, Request, Response} from "express";
+import {Router, Request, Response, NextFunction} from "express";
 import { IApiRouter } from "./IApiRouter";
 import { IWbsItemsController } from "../controllers/WbsItemsController";
 
@@ -16,28 +16,28 @@ export class WbsItemsRouter implements IApiRouter {
 
     const router = Router();
     // handle GET for /api/wbsitems
-    router.get("/", (req: Request, res: Response) => {
-      return this._wbsItemsController.GetWbsItems(req, res);
+    router.get("/", (req: Request, res: Response, next: NextFunction) => {
+      return this._wbsItemsController.GetWbsItems(req, res, next);
     });
 
     // handle GET for /api/wbsitems/:wbsItemId
-    router.get("/:id", (req: Request, res: Response) => {
-      return this._wbsItemsController.GetWbsItemById(req, res);
+    router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
+      return this._wbsItemsController.GetWbsItemById(req, res, next);
     });
 
     // handle POST for /api/wbsitems
-    router.post("/", (req: Request, res: Response) => {
-      return this._wbsItemsController.AddWbsItem(req, res);
+    router.post("/", (req: Request, res: Response, next: NextFunction) => {
+      return this._wbsItemsController.AddWbsItem(req, res, next);
     });
 
     // handle PUT for /api/wbsitems/:wbsItemId
-    router.put("/:id", (req: Request, res: Response) => {
-      return this._wbsItemsController.UpdateWbsItem(req, res);
+    router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
+      return this._wbsItemsController.UpdateWbsItem(req, res, next);
     });
 
     // handle DELETE for /api/wbsitems/:wbsitemId
-    router.delete("/:id", (req: Request, res: Response) => {
-      return this._wbsItemsController.DeleteWbsItem(req, res);
+    router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
+      return this._wbsItemsController.DeleteWbsItem(req, res, next);
     });
 
     return router;
