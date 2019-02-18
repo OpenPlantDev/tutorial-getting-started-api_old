@@ -40,4 +40,13 @@ Multi-part tutorial on creating an api using node, express, typescript
     * npm install
     * npm run dev
 
+## Part 5 (Tag: Part5)
+  * Adding controllers
+    * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part5 [yourFolder]
+    * cd [yourFolder]
+    * code .
+    * open terminal
+    * npm install
+    * npm run dev
+
 
