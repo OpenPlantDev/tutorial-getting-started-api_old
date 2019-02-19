@@ -5,11 +5,11 @@ import {IComponent} from "../models/Component";
 
 export interface IComponentsController {
 
-  GetComponents: (req: Request, res: Response, next: NextFunction) => Response | void;
-  GetComponentById: (req: Request, res: Response, next: NextFunction) => Response | void;
-  AddComponent: (req: Request, res: Response, next: NextFunction) => Response | void;
-  UpdateComponent: (req: Request, res: Response, next: NextFunction) => Response | void;
-  DeleteComponent: (req: Request, res: Response, next: NextFunction) => Response | void;
+  GetComponents: (req: Request, res: Response, next: NextFunction) => Promise<Response | void>;
+  GetComponentById: (req: Request, res: Response, next: NextFunction) => Promise<Response | void>;
+  AddComponent: (req: Request, res: Response, next: NextFunction) => Promise<Response | void>;
+  UpdateComponent: (req: Request, res: Response, next: NextFunction) => Promise<Response | void>;
+  DeleteComponent: (req: Request, res: Response, next: NextFunction) => Promise<Response | void>;
 }
 
 export class ComponentsController implements IComponentsController {
@@ -20,9 +20,9 @@ export class ComponentsController implements IComponentsController {
     this._componentsRepository = componentsRepository;
   }
 
-  public GetComponents(req: Request, res: Response, next: NextFunction): Response | void {
+  public async GetComponents(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const result = this._componentsRepository.GetComponents();
+      const result = await this._componentsRepository.GetComponents();
       if (result instanceof Error) {
         return next(new ApiError(400, result.message));
       }
@@ -32,10 +32,10 @@ export class ComponentsController implements IComponentsController {
     }
   }
 
-  public GetComponentById(req: Request, res: Response, next: NextFunction): Response | void {
+  public async GetComponentById(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const id = req.params.id;
     try {
-      const result = this._componentsRepository.GetComponentById(id);
+      const result = await this._componentsRepository.GetComponentById(id);
       if (result instanceof Error) {
         return next(new ApiError(404, result.message));
       }
@@ -46,7 +46,7 @@ export class ComponentsController implements IComponentsController {
 
   }
 
-  public AddComponent(req: Request, res: Response, next: NextFunction): Response | void {
+  public async AddComponent(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     if (!req.body) {
       return next(new ApiError(400, "No body specified in request"));
     }
@@ -58,7 +58,7 @@ export class ComponentsController implements IComponentsController {
     };
 
     try {
-      const result = this._componentsRepository.AddComponent(comp);
+      const result = await this._componentsRepository.AddComponent(comp);
       if (result instanceof Error) {
         return next(new ApiError(400, result.message));
       }
@@ -68,7 +68,7 @@ export class ComponentsController implements IComponentsController {
     }
   }
 
-  public UpdateComponent(req: Request, res: Response, next: NextFunction): Response | void {
+  public async UpdateComponent(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     if (!req.body) {
       return next(new ApiError(400, "No body specified in request"));
     }
@@ -80,7 +80,7 @@ export class ComponentsController implements IComponentsController {
     };
 
     try {
-      const result = this._componentsRepository.UpdateComponent(comp);
+      const result = await this._componentsRepository.UpdateComponent(comp);
       if (result instanceof Error) {
         return next(new ApiError(404, result.message));
       }
@@ -90,10 +90,10 @@ export class ComponentsController implements IComponentsController {
   }
 }
 
-  public DeleteComponent(req: Request, res: Response, next: NextFunction): Response | void {
+  public async DeleteComponent(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const id = req.params.id;
     try {
-      const result = this._componentsRepository.DeleteComponent(id);
+      const result = await this._componentsRepository.DeleteComponent(id);
       if (result instanceof Error) {
         return next(new ApiError(404, result.message));
       }

@@ -16,28 +16,49 @@ export class WbsItemsRouter implements IApiRouter {
 
     const router = Router();
     // handle GET for /api/wbsitems
-    router.get("/", (req: Request, res: Response, next: NextFunction) => {
-      return this._wbsItemsController.GetWbsItems(req, res, next);
+    router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._wbsItemsController.GetWbsItems(req, res, next);
+      } catch (err) {
+        throw err;
+      }
     });
 
     // handle GET for /api/wbsitems/:wbsItemId
-    router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
-      return this._wbsItemsController.GetWbsItemById(req, res, next);
+    router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._wbsItemsController.GetWbsItemById(req, res, next);
+      } catch (err) {
+        throw err;
+      }
     });
 
     // handle POST for /api/wbsitems
-    router.post("/", (req: Request, res: Response, next: NextFunction) => {
-      return this._wbsItemsController.AddWbsItem(req, res, next);
+    router.post("/", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._wbsItemsController.AddWbsItem(req, res, next);
+      } catch (err) {
+        throw err;
+      }
     });
 
     // handle PUT for /api/wbsitems/:wbsItemId
-    router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
-      return this._wbsItemsController.UpdateWbsItem(req, res, next);
+    router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._wbsItemsController.UpdateWbsItem(req, res, next);
+
+      } catch (err) {
+        throw err;
+      }
     });
 
     // handle DELETE for /api/wbsitems/:wbsitemId
-    router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
-      return this._wbsItemsController.DeleteWbsItem(req, res, next);
+    router.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._wbsItemsController.DeleteWbsItem(req, res, next);
+      } catch (err) {
+        throw err;
+      }
     });
 
     return router;

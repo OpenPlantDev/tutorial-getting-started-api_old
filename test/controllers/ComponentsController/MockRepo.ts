@@ -33,23 +33,23 @@ export class MockRepo implements IComponentsRepository {
     }
   }
 
-  public GetComponents(): IComponent[] | Error {
+  public async GetComponents(): Promise<IComponent[] | Error> {
     return this.ReturnSomething([]);
   }
 
-  public GetComponentById(id: string): IComponent | Error {
+  public async GetComponentById(id: string): Promise<IComponent | Error> {
     return this.ReturnSomething({id, className: "", tag: ""});
   }
 
-  public AddComponent(comp: IComponent): string | Error {
+  public async AddComponent(comp: IComponent): Promise<string | Error> {
     return this.ReturnSomething(Guid.create().toString());
   }
 
-  public UpdateComponent(comp: IComponent): IComponent | Error {
+  public async UpdateComponent(comp: IComponent): Promise<IComponent | Error> {
     return this.ReturnSomething(comp);
   }
 
-  public DeleteComponent(id: string): boolean | Error {
+  public async DeleteComponent(id: string): Promise<boolean | Error> {
     return this.ReturnSomething(true);
   }
 

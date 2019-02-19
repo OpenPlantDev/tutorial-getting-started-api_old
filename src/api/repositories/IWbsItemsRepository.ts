@@ -2,9 +2,9 @@ import { IWbsItem } from "../models/WbsItem";
 
 export interface IWbsItemsRepository {
 
-  GetWbsItems: () => IWbsItem[] | Error;
-  GetWbsItemById: (id: string) => IWbsItem | Error;
-  AddWbsItem: (item: IWbsItem) => string | Error;
-  UpdateWbsItem: (item: IWbsItem) => IWbsItem | Error;
-  DeleteWbsItem: (id: string) => boolean | Error;
+  GetWbsItems: () => Promise<IWbsItem[] | Error>;
+  GetWbsItemById: (id: string) => Promise<IWbsItem | Error>;
+  AddWbsItem: (item: IWbsItem) => Promise<string | Error>;
+  UpdateWbsItem: (item: IWbsItem) => Promise<IWbsItem | Error>;
+  DeleteWbsItem: (id: string) => Promise<boolean | Error>;
 }

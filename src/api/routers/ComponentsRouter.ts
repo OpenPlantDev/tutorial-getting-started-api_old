@@ -15,31 +15,51 @@ export class ComponentsRouter implements IApiRouter {
 
     const router = Router();
     // handle GET for /api/components
-    router.get("/", (req: Request, res: Response, next: NextFunction) => {
-      return this._componentsController.GetComponents(req, res, next);
+    router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._componentsController.GetComponents(req, res, next);
+      } catch (err) {
+        throw err;
+      }
     });
 
     // handle GET for /api/components/:componentId
-    router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
-      return this._componentsController.GetComponentById(req, res, next);
+    router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._componentsController.GetComponentById(req, res, next);
+      } catch (err) {
+        throw err;
+      }
 
     });
 
     // handle POST for /api/components
-    router.post("/", (req: Request, res: Response, next: NextFunction) => {
-      return this._componentsController.AddComponent(req, res, next);
+    router.post("/", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._componentsController.AddComponent(req, res, next);
+      } catch (err) {
+        throw err;
+      }
 
     });
 
     // handle PUT for /api/components/:componentId
-    router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
-      return this._componentsController.UpdateComponent(req, res, next);
+    router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._componentsController.UpdateComponent(req, res, next);
+      } catch (err) {
+        throw err;
+      }
 
     });
 
     // handle DELETE for /api/components/:componentId
-    router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
-      return this._componentsController.DeleteComponent(req, res, next);
+    router.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        return await this._componentsController.DeleteComponent(req, res, next);
+      } catch (err) {
+        throw err;
+      }
     });
 
     return router;

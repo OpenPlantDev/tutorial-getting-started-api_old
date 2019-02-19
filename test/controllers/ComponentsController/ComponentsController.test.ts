@@ -46,24 +46,24 @@ describe("ComponentsController Tests", () => {
   });
 
   describe("GetComponents Tests", () => {
-    it("should set status to 200 if no error", () => {
+    it("should set status to 200 if no error", async () => {
 
-      componentsController.GetComponents(req as Request, res as Response, next as NextFunction);
+      await componentsController.GetComponents(req as Request, res as Response, next as NextFunction);
       expect((res.status as sinon.SinonStub).calledWith(200), `Expecting status 200, status returned ${(res.status as sinon.SinonStub).args[0]}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 400 if repository returns an error", () => {
+    it("should call next with ApiError with status 400 if repository returns an error", async () => {
 
       mockRepo.SetErrorState(MockRepoErrorState.ReturnError);
-      componentsController.GetComponents(req as Request, res as Response, next as NextFunction);
+      await componentsController.GetComponents(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 400)), `Expecting status 400, status returned ${next.args[0][0].status}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 500 if repository throws an error", () => {
+    it("should call next with ApiError with status 500 if repository throws an error", async () => {
 
       mockRepo.SetErrorState(MockRepoErrorState.ThrowError);
-      componentsController.GetComponents(req as Request, res as Response, next as NextFunction);
+      await componentsController.GetComponents(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 500)), `Expecting status 500, status returned ${next.args[0][0].status}`).to.be.true;
     });
@@ -77,54 +77,54 @@ describe("ComponentsController Tests", () => {
       req = {params: {id: "1"}};
     });
 
-    it("should set status to 200 if no error", () => {
-      componentsController.GetComponentById(req as Request, res as Response, next as NextFunction);
+    it("should set status to 200 if no error", async () => {
+      await componentsController.GetComponentById(req as Request, res as Response, next as NextFunction);
       expect((res.status as sinon.SinonStub).calledWith(200), `Expecting status 200, status returned ${(res.status as sinon.SinonStub).args[0]}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 404 if repository returns an error", () => {
+    it("should call next with ApiError with status 404 if repository returns an error",  async () => {
       mockRepo.SetErrorState(MockRepoErrorState.ReturnError);
-      componentsController.GetComponentById(req as Request, res as Response, next as NextFunction);
+      await componentsController.GetComponentById(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 404)), `Expecting status 404, status returned ${next.args[0][0].status}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 500 if repository throws an error", () => {
+    it("should call next with ApiError with status 500 if repository throws an error",  async () => {
       mockRepo.SetErrorState(MockRepoErrorState.ThrowError);
-      componentsController.GetComponentById(req as Request, res as Response, next as NextFunction);
+      await componentsController.GetComponentById(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 500)), `Expecting status 500, status returned ${next.args[0][0].status}`).to.be.true;
     });
   });
 
   describe("AddComponent Tests", () => {
-    it("should set status to 201 if no error", () => {
+    it("should set status to 201 if no error", async () => {
 
-      componentsController.AddComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.AddComponent(req as Request, res as Response, next as NextFunction);
       expect((res.status as sinon.SinonStub).calledWith(201), `Expecting status 201, status returned ${(res.status as sinon.SinonStub).args[0]}`).to.be.true;
     });
 
-    it("should call next with ApiError with status to 400 if no body in request", () => {
+    it("should call next with ApiError with status to 400 if no body in request", async () => {
 
       // override req to be an empty object (no body)
       req = {};
-      componentsController.AddComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.AddComponent(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 400)), `Expecting status 400, status returned ${next.args[0][0].status}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 400 if repository returns an error", () => {
+    it("should call next with ApiError with status 400 if repository returns an error", async () => {
 
       mockRepo.SetErrorState(MockRepoErrorState.ReturnError);
-      componentsController.AddComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.AddComponent(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 400)), `Expecting status 400, status returned ${next.args[0][0].status}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 500 if repository throws an error", () => {
+    it("should call next with ApiError with status 500 if repository throws an error", async () => {
 
       mockRepo.SetErrorState(MockRepoErrorState.ThrowError);
-      componentsController.AddComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.AddComponent(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 500)), `Expecting status 500, status returned ${next.args[0][0].status}`).to.be.true;
     });
@@ -136,33 +136,33 @@ describe("ComponentsController Tests", () => {
       req = {params: {id: "1"}, body: {}};
     });
 
-    it("should set status to 200 if no error", () => {
+    it("should set status to 200 if no error", async () => {
 
-      componentsController.UpdateComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.UpdateComponent(req as Request, res as Response, next as NextFunction);
       expect((res.status as sinon.SinonStub).calledWith(200), `Expecting status 200, status returned ${(res.status as sinon.SinonStub).args[0]}`).to.be.true;
     });
 
-    it("should call next with ApiError with status to 400 if no body in request", () => {
+    it("should call next with ApiError with status to 400 if no body in request", async () => {
 
       // override req to have no body
       req = {params: {id: "1"}};
-      componentsController.UpdateComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.UpdateComponent(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 400)), `Expecting status 400, status returned ${next.args[0][0].status}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 400 if repository returns an error", () => {
+    it("should call next with ApiError with status 400 if repository returns an error", async () => {
 
       mockRepo.SetErrorState(MockRepoErrorState.ReturnError);
-      componentsController.UpdateComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.UpdateComponent(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 404)), `Expecting status 404, status returned ${next.args[0][0].status}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 500 if repository throws an error", () => {
+    it("should call next with ApiError with status 500 if repository throws an error", async () => {
 
       mockRepo.SetErrorState(MockRepoErrorState.ThrowError);
-      componentsController.UpdateComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.UpdateComponent(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 500)), `Expecting status 500, status returned ${next.args[0][0].status}`).to.be.true;
     });
@@ -174,21 +174,21 @@ describe("ComponentsController Tests", () => {
       req = {params: {id: "1"}};
     });
 
-    it("should set status to 200 if no error", () => {
-      componentsController.DeleteComponent(req as Request, res as Response, next as NextFunction);
+    it("should set status to 200 if no error", async () => {
+      await componentsController.DeleteComponent(req as Request, res as Response, next as NextFunction);
       expect((res.status as sinon.SinonStub).calledWith(200), `Expecting status 200, status returned ${(res.status as sinon.SinonStub).args[0]}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 404 if repository returns an error", () => {
+    it("should call next with ApiError with status 404 if repository returns an error", async () => {
       mockRepo.SetErrorState(MockRepoErrorState.ReturnError);
-      componentsController.DeleteComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.DeleteComponent(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 404)), `Expecting status 404, status returned ${next.args[0][0].status}`).to.be.true;
     });
 
-    it("should call next with ApiError with status 500 if repository throws an error", () => {
+    it("should call next with ApiError with status 500 if repository throws an error", async () => {
       mockRepo.SetErrorState(MockRepoErrorState.ThrowError);
-      componentsController.DeleteComponent(req as Request, res as Response, next as NextFunction);
+      await componentsController.DeleteComponent(req as Request, res as Response, next as NextFunction);
       expect(next.calledWith(sinon.match.instanceOf(ApiError)), `Expecting error of type ApiError`).to.be.true;
       expect(next.calledWith(sinon.match.has("status", 500)), `Expecting status 500, status returned ${next.args[0][0].status}`).to.be.true;
     });
