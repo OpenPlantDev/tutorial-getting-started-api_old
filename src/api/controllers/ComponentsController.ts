@@ -21,23 +21,35 @@ export class ComponentsController implements IComponentsController {
   }
 
   public GetComponents(req: Request, res: Response, next: NextFunction): Response | void {
-    const result = this._componentsRepository.GetComponents();
-    if (result instanceof Error) {
-      return next(new ApiError(400, result.message));
+    try {
+      const result = this._componentsRepository.GetComponents();
+      if (result instanceof Error) {
+        return next(new ApiError(400, result.message));
+      }
+      return res.status(200).json(result);
+    } catch (err) {
+      return next(new ApiError(500, err.message));
     }
-    return res.status(200).json(result);
   }
 
   public GetComponentById(req: Request, res: Response, next: NextFunction): Response | void {
     const id = req.params.id;
-    const result = this._componentsRepository.GetComponentById(id);
-    if (result instanceof Error) {
-      return next(new ApiError(404, result.message));
-    }
-    return res.status(200).json(result);
+    try {
+      const result = this._componentsRepository.GetComponentById(id);
+      if (result instanceof Error) {
+        return next(new ApiError(404, result.message));
+      }
+      return res.status(200).json(result);
+      } catch (err) {
+        return next(new ApiError(500, err.message));
+      }
+
   }
 
   public AddComponent(req: Request, res: Response, next: NextFunction): Response | void {
+    if (!req.body) {
+      return next(new ApiError(400, "No body specified in request"));
+    }
     const comp: IComponent = {
       id: "",
       className: req.body.className,
@@ -45,14 +57,21 @@ export class ComponentsController implements IComponentsController {
       properties: req.body.properties,
     };
 
-    const result = this._componentsRepository.AddComponent(comp);
-    if (result instanceof Error) {
-      return next(new ApiError(400, result.message));
+    try {
+      const result = this._componentsRepository.AddComponent(comp);
+      if (result instanceof Error) {
+        return next(new ApiError(400, result.message));
+      }
+      return res.status(201).json(result);
+    } catch (err) {
+      return next(new ApiError(500, err.message));
     }
-    return res.status(200).json(result);
   }
 
   public UpdateComponent(req: Request, res: Response, next: NextFunction): Response | void {
+    if (!req.body) {
+      return next(new ApiError(400, "No body specified in request"));
+    }
     const comp: IComponent = {
       id: req.params.id,
       className: req.body.className,
@@ -60,20 +79,28 @@ export class ComponentsController implements IComponentsController {
       properties: req.body.properties,
     };
 
-    const result = this._componentsRepository.UpdateComponent(comp);
-    if (result instanceof Error) {
-      return next(new ApiError(404, result.message));
-    }
-    return res.status(200).json(result);
+    try {
+      const result = this._componentsRepository.UpdateComponent(comp);
+      if (result instanceof Error) {
+        return next(new ApiError(404, result.message));
+      }
+      return res.status(200).json(result);
+    } catch (err) {
+      return next(new ApiError(500, err.message));
   }
+}
 
   public DeleteComponent(req: Request, res: Response, next: NextFunction): Response | void {
     const id = req.params.id;
-    const result = this._componentsRepository.DeleteComponent(id);
-    if (result instanceof Error) {
-      return next(new ApiError(404, result.message));
+    try {
+      const result = this._componentsRepository.DeleteComponent(id);
+      if (result instanceof Error) {
+        return next(new ApiError(404, result.message));
+      }
+      return res.status(200).json(result);
+      } catch (err) {
+      return next(new ApiError(500, err.message));
     }
-    return res.status(200).json(result);
   }
 
 }
