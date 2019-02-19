@@ -38,5 +38,7 @@ After cloning:
 ## Part 8 (Tag: Part8)
   * Unit testing the ComponentsController
     * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part8 [yourFolder]
-
+## Part 9 (Tag: Part9)
+  * Making it async using Promises and async/await
+    * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part9 [yourFolder]
 
