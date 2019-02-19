@@ -35,4 +35,8 @@ After cloning:
 ## Part 7 (Tag: Part7)
   * Refactor controllers to use next instead of throw for error handling
     * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part7 [yourFolder]
+## Part 8 (Tag: Part8)
+  * Unit testing the ComponentsController
+    * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part8 [yourFolder]
+
 
