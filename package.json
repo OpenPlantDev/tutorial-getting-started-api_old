@@ -20,6 +20,7 @@
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.9.4",
     "@types/sinon": "^7.0.6",
+    "@types/sqlite3": "^3.1.4",
     "chai": "^4.2.0",
     "env-cmd": "^8.0.2",
     "mocha": "^5.2.0",
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "guid-typescript": "^1.0.9"
+    "guid-typescript": "^1.0.9",
+    "sqlite3": "^4.0.6"
   }
 }
