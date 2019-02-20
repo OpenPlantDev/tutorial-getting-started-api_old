@@ -47,5 +47,9 @@ After cloning:
 ## Part 11 (Tag: Part11)
   * Adding Query String Parameters
     * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part11 [yourFolder]
+## Part 12 (Tag: Part12)
+  * Allowing CORS
+    * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part12 [yourFolder]
+
 
 
