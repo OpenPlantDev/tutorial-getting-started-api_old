@@ -1,6 +1,7 @@
 import { IWbsItemsRepository } from "./IWbsItemsRepository";
 import { IWbsItem } from "../models/WbsItem";
 import { SqliteServices } from "../../services/sqlite.service";
+import { IQueryOptions } from "../../services/queryOptions.service";
 
 const rowToWbsItem = (row: any): IWbsItem => {
   return {
@@ -31,8 +32,9 @@ export class WbsItemsDb implements IWbsItemsRepository {
     this._sqliteServices = sqliteServices;
   }
 
-  public async GetWbsItems(): Promise<IWbsItem[] | Error> {
-    const query = `Select * from ${this._tableName}`;
+  public async GetWbsItems(queryOptions?: IQueryOptions): Promise<IWbsItem[] | Error> {
+    const query = this._sqliteServices.GetQueryString(this._tableName, queryOptions);
+    console.log(`query = ${query}`);
     try {
       const result = await this._sqliteServices.Query(query);
       if (result instanceof Error) {

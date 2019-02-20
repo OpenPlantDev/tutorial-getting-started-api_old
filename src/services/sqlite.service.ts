@@ -1,4 +1,5 @@
 import sqlite3 from "sqlite3";
+import { IQueryOptions } from "./queryOptions.service";
 
 export interface IExecuteResults {
   rowsAffected: number;
@@ -56,5 +57,15 @@ export class SqliteServices {
         });
       }
     });
+  }
+
+  public GetQueryString(tableName: string, options?: IQueryOptions) {
+    let whereClause = "";
+    if (options) {
+        whereClause = options.filter ? `Where ${options.filter}`  : whereClause;
+        whereClause = options.orderBy ? `${whereClause}  order by ${options.orderBy}` : whereClause;
+        whereClause = (options.limit > 0) ? `${whereClause} Limit ${options.limit}` : whereClause;
+    }
+    return `Select * from ${tableName} ${whereClause}`;
   }
 }

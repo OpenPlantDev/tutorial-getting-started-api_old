@@ -2,6 +2,7 @@ import {Request, Response, NextFunction} from "express";
 import {IWbsItemsRepository} from "../repositories/IWbsItemsRepository";
 import {IWbsItem} from "../models/WbsItem";
 import {ApiError} from "../ApiError";
+import {QueryOptions} from "../../services/queryOptions.service";
 
 export interface IWbsItemsController {
 
@@ -22,7 +23,8 @@ export class WbsItemsController implements IWbsItemsController {
 
   public async GetWbsItems(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const result = await this._wbsItemsRepository.GetWbsItems();
+      const queryOptions = QueryOptions.GetOptions(req.query);
+      const result = await this._wbsItemsRepository.GetWbsItems(queryOptions);
       if (result instanceof Error) {
         return res.send(new ApiError(400, result.message));
       }

@@ -2,6 +2,7 @@ import {Request, Response, NextFunction} from "express";
 import { IComponentsRepository } from "../repositories/IComponentsRepository";
 import { ApiError } from "../ApiError";
 import {IComponent} from "../models/Component";
+import {QueryOptions} from "../../services/queryOptions.service";
 
 export interface IComponentsController {
 
@@ -22,7 +23,9 @@ export class ComponentsController implements IComponentsController {
 
   public async GetComponents(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const result = await this._componentsRepository.GetComponents();
+      const queryOptions = QueryOptions.GetOptions(req.query);
+
+      const result = await this._componentsRepository.GetComponents(queryOptions);
       if (result instanceof Error) {
         return next(new ApiError(400, result.message));
       }
