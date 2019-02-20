@@ -41,4 +41,8 @@ After cloning:
 ## Part 9 (Tag: Part9)
   * Making it async using Promises and async/await
     * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part9 [yourFolder]
+## Part 10 (Tag: Part10)
+  * Adding Sqlite database 
+    * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part10 [yourFolder]
+
 
