@@ -1,3 +1,5 @@
+import express from "express";
+import * as http from "http";
 import {Api} from "./api/api";
 import {IApiRouter} from "./api/routers/IApiRouter";
 import { ComponentsRouter } from "./api/routers/ComponentsRouter";
@@ -9,37 +11,24 @@ import {ComponentsDb} from "./api/repositories/ComponentsDb";
 // import {FakeDb} from "./api/repositories/FakeDb";
 import { SqliteServices } from "./services/sqlite.service";
 import { WbsItemsDb } from "./api/repositories/WbsItemsDb";
+import { SocketService } from "./services/socket.service";
 
-const api = new Api();
-
-// const fakeDb = new FakeDb();
-// fakeDb.SeedDb(
-//   [
-//     {id: "1", className: "valve", tag: "V-100", properties: {desc: "Gate Valve"}},
-//     {id: "2", className: "valve", tag: "V-101", properties: {desc: "Globe Valve"}},
-//     {id: "3", className: "pump", tag: "P-100", properties: {desc: "Pump"}},
-//     {id: "4", className: "vessel", tag: "H-100", properties: {desc: "Tank"}},
-//   ],
-//   [
-//     {id: "11", className: "unit", tag: "U1", properties: {desc: "Unit #1"}},
-//     {id: "12", className: "unit", tag: "U2", properties: {desc: "Unit #2"}},
-//     {id: "13", className: "service", tag: "S1", properties: {desc: "Service #1"}},
-//     {id: "14", className: "area", tag: "S2", properties: {desc: "Area #1"}},
-//   ],
-
-// );
+const app = express();
+const httpServer = new http.Server(app);
+const socketService = new SocketService(httpServer);
 
 const sqliteServices: SqliteServices = new SqliteServices("model.db");
 
 const compsDb = new ComponentsDb(sqliteServices);
 const wbsItemsDb = new WbsItemsDb(sqliteServices);
 
-const compController = new ComponentsController(compsDb);
-const wbsItemsController = new WbsItemsController(wbsItemsDb);
+const compController = new ComponentsController(compsDb, socketService);
+const wbsItemsController = new WbsItemsController(wbsItemsDb, socketService);
 
 const routers: IApiRouter[] = [
   new ComponentsRouter(compController),
   new WbsItemsRouter(wbsItemsController),
 ];
 
-api.Start(routers);
+const api = new Api();
+api.Start(app, httpServer, routers);

@@ -3,6 +3,7 @@ import { IComponentsRepository } from "../repositories/IComponentsRepository";
 import { ApiError } from "../ApiError";
 import {IComponent} from "../models/Component";
 import {QueryOptions} from "../../services/queryOptions.service";
+import { SocketService } from "../../services/socket.service";
 
 export interface IComponentsController {
 
@@ -16,9 +17,11 @@ export interface IComponentsController {
 export class ComponentsController implements IComponentsController {
 
   private _componentsRepository: IComponentsRepository;
+  private _socketService: SocketService;
 
-  constructor(componentsRepository: IComponentsRepository) {
+  constructor(componentsRepository: IComponentsRepository, socketService: SocketService) {
     this._componentsRepository = componentsRepository;
+    this._socketService = socketService;
   }
 
   public async GetComponents(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
@@ -65,6 +68,8 @@ export class ComponentsController implements IComponentsController {
       if (result instanceof Error) {
         return next(new ApiError(400, result.message));
       }
+      // if we added a new component, send message on server
+      this._socketService.emitMessage("DbUpdated", "Component was added");
       return res.status(201).json(result);
     } catch (err) {
       return next(new ApiError(500, err.message));
@@ -87,6 +92,8 @@ export class ComponentsController implements IComponentsController {
       if (result instanceof Error) {
         return next(new ApiError(404, result.message));
       }
+      // if we updated the component, send message on server
+      this._socketService.emitMessage("DbUpdated", "Component was updated");
       return res.status(200).json(result);
     } catch (err) {
       return next(new ApiError(500, err.message));
@@ -100,6 +107,8 @@ export class ComponentsController implements IComponentsController {
       if (result instanceof Error) {
         return next(new ApiError(404, result.message));
       }
+      // if we deleted the component, send message on server
+      this._socketService.emitMessage("DbUpdated", "Component was deleted");
       return res.status(200).json(result);
       } catch (err) {
       return next(new ApiError(500, err.message));
