@@ -17,6 +17,7 @@ export class SocketService {
   }
 
   public emitMessage(event: string, message: string) {
+    // console.log(`Emitting message: ${event}: ${message}`);
     this._ioServer.emit(event, message);
   }
 }
