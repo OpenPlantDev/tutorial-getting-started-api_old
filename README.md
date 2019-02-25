@@ -29,9 +29,6 @@ After cloning:
 ## Part 6 (Tag: Part6)
   * Adding IRepository and FakeDb
     * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part6 [yourFolder]
-## Part 6 (Tag: Part6)
-  * Adding IRepository and FakeDb
-    * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part6 [yourFolder]
 ## Part 7 (Tag: Part7)
   * Refactor controllers to use next instead of throw for error handling
     * git clone https://github.com/OpenPlantDev/tutorial-getting-started-api.git -b Part7 [yourFolder]
