@@ -2,6 +2,8 @@ import express from "express";
 import * as http from "http";
 import {ApiError} from "./ApiError";
 import {IApiRouter} from "./routers/IApiRouter";
+import { AuthRouter } from "./routers/AuthRouter";
+import * as AuthService from "../services/auth.service";
 
 export class Api {
 
@@ -17,6 +19,20 @@ export class Api {
       if (req.method === "OPTIONS") {
         res.header("Access-Control-Allow-Methods", "GET POST PUT DELETE");
         return res.status(200).json({});
+      }
+      return next();
+    });
+
+    // login
+    const loginRouter = new AuthRouter();
+    api.use(loginRouter.route, loginRouter.RouteHandler());
+
+    // Authentication
+    api.use("/api", (req, res, next) => {
+      const authHeader = req.get("Authorization") as string;
+      const authResult = AuthService.validateToken(authHeader);
+      if (authResult instanceof ApiError) {
+        return next(authResult);
       }
       return next();
     });
