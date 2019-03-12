@@ -111,7 +111,7 @@ export class FakeDb implements IComponentsRepository, IWbsItemsRepository {
       });
   }
 
-  public async UpdateWbsItem(item: IWbsItem): Promise<IComponent | Error> {
+  public async UpdateWbsItem(item: IWbsItem): Promise<IWbsItem | Error> {
 
     return new Promise((resolve, reject) => {
 

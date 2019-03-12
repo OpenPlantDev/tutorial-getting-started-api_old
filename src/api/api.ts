@@ -2,7 +2,7 @@ import express from "express";
 import * as http from "http";
 import {ApiError} from "./ApiError";
 import {IApiRouter} from "./routers/IApiRouter";
-import { AuthRouter } from "./routers/AuthRouter";
+import { LoginRouter } from "./routers/LoginRouter";
 import * as AuthService from "../services/auth.service";
 
 export class Api {
@@ -24,7 +24,7 @@ export class Api {
     });
 
     // login
-    const loginRouter = new AuthRouter();
+    const loginRouter = new LoginRouter();
     api.use(loginRouter.route, loginRouter.RouteHandler());
 
     // Authentication
